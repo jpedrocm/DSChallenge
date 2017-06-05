@@ -11,7 +11,7 @@ REPORT_FILEPATH = 'data/reports/'
 
 
 if __name__=='__main__':
-  """This script generates reports from the given csv"""
+    """This script generates reports from the given csv."""
 
     try:
         csv_filepath = sys.argv[1]
