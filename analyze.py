@@ -6,9 +6,13 @@ import numpy as np
 from IOModule import IOProcessor
 from AnalyzerModule import Analyzer
 
+
 REPORT_FILEPATH = 'data/reports/'
 
+
 if __name__=='__main__':
+  """This script generates reports from the given csv"""
+
     try:
         csv_filepath = sys.argv[1]
         is_train = 'train' in csv_filepath

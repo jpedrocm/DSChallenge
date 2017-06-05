@@ -22,7 +22,7 @@ class IOProcessor:
     def _stringnize_header_report(cls, report):
         """Convert the header report to a formatted string."""
 
-        delim = "######################################\n"
+        delim = "######################################"
         
         header = cls._stringnize_pair('Header', report['header'])
         exp_type = cls._stringnize_pair('Expected type', 
@@ -30,8 +30,8 @@ class IOProcessor:
         type_stats = cls._stringnize_pair('Type stats', report['type_stats'])
         val_stats = cls._stringnize_pair('Value stats', report['value_stats'])
         
-        final_str = "".join([delim, header, exp_type, type_stats, val_stats,
-                        "\n######################################"])
+        final_str = "%s\n%s%s%s%s\n%s" %(delim, header, exp_type, type_stats,
+                                         val_stats, delim)
         
         return final_str
 
@@ -39,7 +39,7 @@ class IOProcessor:
     def _stringnize_pair(header, content):
         """Convert a header-content from the report to a formatted string."""
 
-        return '\n'.join([header, ': ', str(content), '\n'])
+        return "\n%s%s%s\n" % (header, ': ', str(content))
 
     @classmethod
     def read_dataset(cls, filepath):

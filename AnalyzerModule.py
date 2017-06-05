@@ -3,6 +3,7 @@ from pandas import DataFrame
 import numpy as np
 
 class Analyzer:
+    """This class create reports from the datasets"""
     
     @classmethod
     def _analyze_header(cls, header_frame, header, data_type):
@@ -26,10 +27,19 @@ class Analyzer:
 
     @staticmethod
     def _update_stats(stats, val):
+        """Update the count of the value val in the given stats dict"""
+
         if val in stats:
             stats[val]+=1
         else:
             stats[val]=1
+
+
+    @staticmethod
+    def create_general_report(dataframe):
+        """Returns a general report of all dataframe's numeric headers"""
+
+        return dataframe.describe()
     
     @classmethod
     def create_header_reports(cls, dataframe, hashmap):
@@ -49,8 +59,3 @@ class Analyzer:
                 analysis.append(header_analysis)
 
         return analysis
-
-
-    @staticmethod
-    def create_general_report(dataframe):
-        return dataframe.describe()
