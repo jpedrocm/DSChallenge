@@ -49,7 +49,8 @@ if __name__=='__main__':
 
     print "Encoding features and labels"
     Encoder.encode_booleans(df, HEADERS_BOOLEAN)
-    encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
+    encoded_df = Encoder.encode_categoricals(df, 
+                                             HEADERS_CATEGORICAL)
     X, y, ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
                                                          'default', 'ids')
     print "(rows, features) = " + str(X.shape)

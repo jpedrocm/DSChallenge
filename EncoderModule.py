@@ -72,3 +72,26 @@ class Encoder:
         del dataframe
 
         return X, y, ids_frame
+
+    @staticmethod
+    def undersample(dataframe):
+        """Do undersampling on the dataframe."""
+
+        df_false = dataframe[dataframe.default==False]
+        df_true = dataframe[dataframe.default==True]
+
+        under_df_false = df_false.sample(df_true.shape[0]*2)
+        new_dataframe = pd.concat([under_df_false, df_true])
+
+        return new_dataframe
+
+    @staticmethod
+    def oversample(dataframe):
+        """Do undersampling on the dataframe."""
+
+        df_false = dataframe[dataframe.default==False]
+        df_true = dataframe[dataframe.default==True]
+
+        new_dataframe = pd.concat([df_false, df_true, df_true])
+
+        return new_dataframe
