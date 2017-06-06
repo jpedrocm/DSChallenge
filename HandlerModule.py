@@ -9,6 +9,8 @@ class Handler:
 
     @classmethod
     def _identify_imputation_method(cls, method):
+        """Returns the appropriate imputation function."""
+
         if method=='mean':
             return cls._impute_mean_value
         elif method=='mode':
@@ -36,7 +38,7 @@ class Handler:
     def _impute_mode_value(column):
         """Fill missing data with the mode of the column."""
 
-        mode_val = column.mode()
+        mode_val = column.mode()[0]
         column.fillna(value=mode_val, inplace=True)
 
     @staticmethod
