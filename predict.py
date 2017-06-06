@@ -6,10 +6,11 @@ from HandlerModule import Handler
 from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
-from VariablesModule import N_FOLDS, MODEL_DICT
+from VariablesModule import N_FOLDS, MODEL_DICT, HEADERS_TRAIN_FILENAME
 from VariablesModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
 from VariablesModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
 from VariablesModule import HEADERS_BOOLEAN, HEADERS_CATEGORICAL
+
 
 
 if __name__=='__main__':
@@ -26,6 +27,7 @@ if __name__=='__main__':
     
     try:
         model = IOProcessor.load_model(model_filepath)
+        headers_train = IOProcessor.load_encoded_headers(HEADERS_TRAIN_FILENAME)
     except:
         raise Exception("Model not found in the given path.")
 
@@ -45,15 +47,22 @@ if __name__=='__main__':
     print "Encoding features and labels"
     Encoder.encode_booleans(df, HEADERS_BOOLEAN)
     encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
-    Encoder.add_missing_features(encoded_df, HEADERS_TRAINING)
-    Encoder.reorder_headers(encoded_df, HEADERS_TRAINING)
+    print encoded_df.shape
+    Encoder.adapt_test_features(encoded_df, headers_train)
+    print encoded_df.shape
     X, _ , ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
                                                          None, 'ids')
     print "(rows, features) = " + str(X.shape)
 
+    raise NameError
+
     print "Predicting probabilities"
     exp = Experimentation(model, N_FOLDS)
     probs = exp.predict_probs(X)
+
+    print probs
+
+    raise NameError
 
     print "Writing results"
     IOProcessor.write_to_csv(predictions_filepath, ids_frame, probs)

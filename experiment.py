@@ -1,12 +1,14 @@
 ##############################################################################
 import sys
 
+import numpy as np
+
 from IOModule import IOProcessor
 from HandlerModule import Handler
 from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
-from VariablesModule import N_FOLDS, MODEL_DICT
+from VariablesModule import N_FOLDS, MODEL_DICT, HEADERS_TRAIN_FILENAME
 from VariablesModule import ROWS_REMOVABLE_ALL, ROWS_REMOVABLE_ANY
 from VariablesModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
 from VariablesModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
@@ -65,8 +67,11 @@ if __name__=='__main__':
     print "Training model"
     exp.train_model(X, y)
     print exp.predict_probs(X)
+
     print "Storing model"
     trained_model = exp.get_model()
     IOProcessor.store_model(trained_model, model_filepath)
+    IOProcessor.store_encoded_headers(np.array(encoded_df.columns), 
+                                      HEADERS_TRAIN_FILENAME)
 
     print "Done"

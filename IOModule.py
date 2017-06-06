@@ -1,6 +1,7 @@
 ##############################################################################
 import pandas as pd
 
+import pickle
 from sklearn.externals import joblib
 
 
@@ -44,6 +45,13 @@ class IOProcessor:
         return "\n%s%s%s\n" % (header, ': ', str(content))
 
     @staticmethod
+    def load_encoded_headers(filename):
+        """Loads the headers encoded after preprocessing."""
+
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+
+    @staticmethod
     def load_model(filepath):
         """Loads and returns the ML model from the file in filepath."""
 
@@ -55,6 +63,14 @@ class IOProcessor:
 
         df = pd.read_csv(filepath, infer_datetime_format=True)
         return df
+
+    @staticmethod
+    def store_encoded_headers(headers, filename):
+        """Stores the headers encoded after preprocessing."""
+
+        with open(filename, 'wb') as f:
+            pickle.dump(headers, f)
+        
 
     @staticmethod
     def store_model(model, filepath):

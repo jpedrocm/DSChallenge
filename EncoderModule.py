@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 
+
 class Encoder:
     """This class encodes boolean and categorical features to types the model
     can receive as input. Also encodes the labels.
@@ -14,6 +15,25 @@ class Encoder:
 
         return column.replace(to_replace=[True, False], value=[1, 0],
                                           inplace=True)
+
+    @staticmethod
+    def adapt_test_features(test_dataframe, TRAIN_HEADERS):
+        """Removes, adds and reorders the dataframe based on its headers and
+        the headers from the training set, so both frames have the same number
+        of features.
+        """
+
+        test_headers = np.array(test_dataframe.columns)
+        del_test_headers = filter(lambda h: h not in TRAIN_HEADERS, 
+                                  test_headers)
+        test_dataframe.drop(del_test_headers, inplace=True, axis=1)
+        
+        add_test_headers = filter(lambda h: h not in test_headers,
+                                  TRAIN_HEADERS)
+        for header in add_test_headers:
+            test_dataframe[header] = np.zeros(test_dataframe.shape[0])
+
+        test_dataframe = test_dataframe[TRAIN_HEADERS]
 
     @classmethod
     def encode_booleans(cls, dataframe, headers):
@@ -37,7 +57,7 @@ class Encoder:
         The second is the column frame of labels, the third is the column 
         frame of IDs and the first are all the remaining columns.
         """
-        
+
         ids = np.array(dataframe[id_header])
 
         if label_header is None:

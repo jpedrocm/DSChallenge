@@ -6,6 +6,9 @@ from sklearn.linear_model import LogisticRegression, SGDClassifier
 """This module contains all variables for experimentation and prediction."""
 
 
+# FILENAME OF THE ENCODED HEADERS CREATED AFTER TRAINING
+HEADERS_TRAIN_FILENAME = "encoded_headers.pickle"
+
 # NUMBER OF FOLDS IN CROSS VALIDATION
 N_FOLDS = 5
 
