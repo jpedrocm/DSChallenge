@@ -16,18 +16,18 @@ class Experimentation:
         self.model = model
         self.n_folds = n_folds
 
-    def _cross_validation_score(self, X, y):
+    def _cross_validation_score(self, X, y, scoring):
         """Makes cross_validation and evaluate each fold score."""
 
         scores = cross_val_score(self.model, X, y = y, cv = self.n_folds,
-                               scoring ='f1_micro', verbose=2, n_jobs=1)
+                               scoring = scoring, verbose=2, n_jobs=1)
 
         return scores
 
-    def experiment_model(self, X, y):
+    def experiment_model(self, X, y, scoring):
         """Returns the results of the cross-validation."""
 
-        folds_scores = self._cross_validation_score(X, y)
+        folds_scores = self._cross_validation_score(X, y, scoring)
         mean_score = np.mean(folds_scores)
         std_score = np.std(folds_scores)
 

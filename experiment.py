@@ -57,12 +57,20 @@ if __name__=='__main__':
 
     print "Evaluating model"
     exp = Experimentation(model, N_FOLDS)
-    f1_folds, avg, dev = exp.experiment_model(X, y)
+    f1_folds, avg, dev = exp.experiment_model(X, y, 'f1_micro')
 
     print "\n################################"
     print "F1 scores: " + str(f1_folds)
     print "F1 mean: " + str(avg)
     print "F1 deviation: " + str(dev)
+    print "################################\n"
+
+    f1_folds, avg, dev = exp.experiment_model(X, y, 'neg_log_loss')
+
+    print "\n################################"
+    print "Neg Log Loss scores: " + str(f1_folds)
+    print "Neg Log Loss mean: " + str(avg)
+    print "Neg Log Loss deviation: " + str(dev)
     print "################################\n"
 
     print "Training model"

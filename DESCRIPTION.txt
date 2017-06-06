@@ -20,6 +20,6 @@ scikit-learn - to create ML models and evaluate them
 
 First, I ran analyze.py on the training and testing sets to generate reports to better understand the data. The reports showed the distribution of values per column in the datasets and the original data type of those values. This way, I could decide which columns were informative, which needed imputing for missing values, and how this imputation was going to be made. It also allowed me to check which values needed encoding.
 
-Then, using a 5-fold cross-validation, I ran experiments with 3 ML models (also tuning their hyperparameters) [SEE INSTRUCTIONS] on the training set to check which model had the best results based on the F-Measure score per fold, the average and standard deviation of them.
+Then, using a 5-fold cross-validation, I ran experiments with 3 ML models (also tuning their hyperparameters) [SEE INSTRUCTIONS] on the training set to check which model had the best results based on the Negative Log Loss and the F-Measure score per fold, the average and standard deviation of them.
 
-Finally, the probabilities were generated using the model with a good balance between having a high averaged F-Measure and a small deviation.
+Finally, the probabilities were generated using the model with a good balance between those two metrics.
