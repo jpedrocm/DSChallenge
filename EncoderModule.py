@@ -36,14 +36,16 @@ class Encoder:
         IDs and the first are all the remaining columns.
         """
 
-        copied_dataframe = dataframe.drop([id_header, label_header], axis=1)
-        X = copied_dataframe.values[:,:-1].astype(np.float64)
-
         if label_header is None:
             y = None
         else:
-            y = dataframe[label_header].values.astype(np.float64)
+            y = dataframe[label_header].values.astype(np.float32)
 
         ids_frame = dataframe[id_header].copy()
+
+        dataframe.drop([id_header, label_header], axis=1, inplace=True)
+        X = dataframe.values[:,:-1].astype(np.float32)
+
+        del dataframe
 
         return X, y, ids_frame
