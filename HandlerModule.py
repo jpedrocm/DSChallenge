@@ -66,9 +66,9 @@ class Handler:
         dataframe.drop(headers, inplace=True, axis=1)
 
     @staticmethod
-    def remove_rows(dataframe, headers):
-        """Removes rows which has invalid values for all columns from the
+    def remove_rows(dataframe, headers, how):
+        """Removes rows which has invalid values for all/any columns from the
         given header list.
         """
 
-        dataframe.dropna(how='all', subset=headers, inplace=True)
+        dataframe.dropna(how=how, subset=headers, inplace=True)

@@ -9,12 +9,10 @@ from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
 
-ROWS_REMOVABLES_1 = ['n_accounts', 'n_issues', 'n_bankruptcies', 'ok_since',
+ROWS_REMOVABLES_ALL = ['n_accounts', 'n_issues', 'n_bankruptcies', 'ok_since',
                    'n_defaulted_loans', 'real_state', 'job_name']
 
-ROWS_REMOVABLES_2 = ['state', 'zip']
-
-ROWS_REMOVABLES_3 = ['last_payment', 'end_last_loan']
+ROWS_REMOVABLES_ANY = ['state', 'zip', 'last_payment', 'end_last_loan']
 
 HEADERS_REMOVALBLE = ['ids', 'channel', 'sign', 'ok_since', 'job_name']
 
@@ -45,12 +43,13 @@ if __name__=='__main__':
     
     df = IOProcessor.read_dataset(train_filepath)
 
-    Handler.remove_rows(df, ROWS_REMOVABLES_1)
-    Handler.remove_rows(df, ROWS_REMOVABLES_2)
-    Handler.remove_rows(df, ROWS_REMOVABLES_3)
+    Handler.remove_rows(df, ROWS_REMOVABLES_ALL, 'all')
+    Handler.remove_rows(df, ROWS_REMOVABLES_ANY, 'any')
     Handler.remove_columns(df, HEADERS_REMOVALBLE)
 
     Handler.impute_missing_values(df, HEADERS_MEAN, 'mean')
     Handler.impute_missing_values(df, HEADERS_MEDIAN, 'median')
     Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
     Handler.impute_missing_values(df, HEADERS_PREVIOUS)
+
+    
