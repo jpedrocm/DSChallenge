@@ -43,7 +43,7 @@ class Handler:
     def _impute_previous_value(column):
         """Fill missing data with previous values present in the column."""
 
-        column.fillna(method='ffil', inplace=True)
+        column.fillna(method='pad', inplace=True)
 
     @classmethod
     def impute_missing_values(cls, dataframe, headers, method = None):
@@ -64,3 +64,11 @@ class Handler:
         """
 
         dataframe.drop(headers, inplace=True, axis=1)
+
+    @staticmethod
+    def remove_rows(dataframe, headers):
+        """Removes rows which has invalid values for all columns from the
+        given header list.
+        """
+
+        dataframe.dropna(how='all', subset=headers, inplace=True)
