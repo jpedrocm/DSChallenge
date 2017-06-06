@@ -2,7 +2,7 @@ I have coded a Python project with 3 scripts to generate the final results. Thes
 
 Scripts:
 analyze.py - loads a dataset and creates analysis reports as .report files
-experiment.py - loads, handles and encodes the training set. Also loads a ML model, runs the experiment and save the model to a pickle file
+experiment.py - loads, handles and encodes the training set. Also creates a ML model, runs the experiment and save the model to a pickle file
 predict.py - loads, handles and encodes the test set. Then, loads a ML model from a previosly generated file, make the predictions and save them to the CSV
 
 Modules:
@@ -21,4 +21,4 @@ First, I ran the analysis script on the training and testing sets to generate re
 
 Then, using a 5-fold cross-validation, I ran the experimentation script with Logistic Regression and Stochasting Gradient Descent Regression (also changing their parameters) on the training set to check which model had the best results based on the F-Measure score per fold, the average of them and the standard deviation.
 
-Finally, the probabilities were generated using the model with highest F-Measure [SEE INSTRUCTIONS].
+Finally, the probabilities were generated using the model with a good balance between having high average F-Measure while maintaining small deviation.
