@@ -5,7 +5,15 @@ import numpy as np
 
 class Encoder:
     """This class encodes boolean and categorical features to types the model
-    can receive as input. Also encodes the labels."""
+    can receive as input. Also encodes the labels.
+    """
+
+    @staticmethod
+    def _encode_boolean(column):
+        """Do in place boolean2int encoding in the column."""
+
+        return column.replace(to_replace=[True, False], value=[1, 0],
+                                          inplace=True)
 
     @classmethod
     def encode_booleans(cls, dataframe, headers):
@@ -18,34 +26,28 @@ class Encoder:
     @staticmethod
     def encode_categoricals(dataframe, headers):
         """Do one hot encoding for columns with a header in headers.
-        Not in place."""
+        Not in place.
+        """
 
         return pd.get_dummies(dataframe, columns = headers)
 
     @staticmethod
-    def _encode_boolean(column):
-        """Do in place boolean2int encoding in the column."""
-
-        return column.replace(to_replace=[True, False], value=[1, 0],
-                              inplace=True)
-
-    @staticmethod
-    def divide_dataframe(dataframe, label_header, id_header):
-        """Divide the given dataframe into three parts and returns them. The
-        second is the column frame of labels, the third is the column frame of
-        IDs and the first are all the remaining columns.
+    def transform_and_del_dataframe(dataframe, label_header, id_header):
+        """Transform the given dataframe into three parts and returns them.
+        The second is the column frame of labels, the third is the column 
+        frame of IDs and the first are all the remaining columns.
         """
 
         if label_header is None:
             y = None
         else:
-            y = dataframe[label_header].values.astype(np.float32)
+            y = np.array(dataframe[label_header]).astype(np.float32)
 
-        ids_frame = dataframe[id_header].copy()
+        ids = np.array(dataframe[id_header])
 
-        dataframe.drop([id_header, label_header], axis=1, inplace=True)
-        X = dataframe.values[:,:-1].astype(np.float32)
+        dataframe.drop([id_header, label_header], axis=1, inplace=True)          
+        X = np.array(dataframe).astype(np.float32)
 
         del dataframe
 
-        return X, y, ids_frame
+        return X, y, ids
