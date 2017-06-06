@@ -49,6 +49,7 @@ if __name__=='__main__':
     encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
     X, y, ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
                                                          'default', 'ids')
+
     print "Training model"
     exp = Experimentation(model, N_FOLDS)
     f1_folds, avg, dev = exp.experiment_model(X, y)

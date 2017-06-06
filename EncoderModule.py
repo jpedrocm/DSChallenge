@@ -41,12 +41,12 @@ class Encoder:
         if label_header is None:
             y = None
         else:
-            y = np.array(dataframe[label_header]).astype(np.float32)
+            y = np.array(dataframe[label_header]).astype(bool)
 
         ids = np.array(dataframe[id_header])
 
         dataframe.drop([id_header, label_header], axis=1, inplace=True)          
-        X = np.array(dataframe).astype(np.float32)
+        X = np.array(dataframe).astype(np.float64)
 
         del dataframe
 

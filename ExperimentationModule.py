@@ -19,8 +19,10 @@ class Experimentation:
     def _cross_validation_score(self, X, y):
         """Makes cross_validation and evaluate each fold score."""
 
-        return cross_val_score(self.model, X, y = y, cv = self.n_folds,
-                               scoring ='f1_micro' ,verbose = 2, n_jobs = -1)
+        scores = cross_val_score(self.model, X, y = y, cv = self.n_folds,
+                               scoring ='f1' ,verbose = 2, n_jobs = -1)
+
+        return scores
 
     def experiment_model(self, X, y):
         """Returns the results of the cross-validation."""

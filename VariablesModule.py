@@ -10,9 +10,15 @@ from sklearn.linear_model import LogisticRegression, SGDClassifier
 N_FOLDS = 5
 
 # DICT OF (MODEL_INITIAL: MODEL OBJECT)
-MODEL_DICT = {"lg": LogisticRegression(n_jobs = -1, random_state = 14128), 
+MODEL_DICT = {"lg": LogisticRegression(n_jobs = -1, random_state = 14128),
+              "lg_c": LogisticRegression(class_weight='balanced', n_jobs = -1,
+                                         random_state = 14128),
               "sgd": SGDClassifier(n_jobs = -1, random_state = 14128),
-              "rf": RandomForestClassifier(n_jobs = -1, random_state = 14128)}
+              "sgd_log": SGDClassifier(loss='log', class_weight='balanced',
+                                       n_jobs = -1, random_state = 14128),
+              "rf": RandomForestClassifier(n_jobs = -1, random_state = 14128),
+              "rf_50": RandomForestClassifier(n_estimators = 50, n_jobs = -1,
+                                              random_state = 14128)}
 
 # ROWS CONTAINING MISSING VALUES IN ALL OF THESE COLUMNS WILL BE REMOVED
 ROWS_REMOVABLE_ALL = ['n_accounts', 'n_issues', 'n_bankruptcies', 'ok_since',
@@ -42,7 +48,7 @@ HEADERS_PREVIOUS = ['facebook_profile', 'gender', 'state', 'zip']
     #last paymnt, end last loan
 
 # COLUMNS TO ENCODE FROM BOOLEANS TO 1's AND 0's
-HEADERS_BOOLEAN = ['facebook_profile', 'default']
+HEADERS_BOOLEAN = ['facebook_profile']
 
 # COLUMNS TO ONE-HOT ENCODE
 HEADERS_CATEGORICAL = ['gender', 'real_state', 'score_1', 'score_2', 
