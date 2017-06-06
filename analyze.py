@@ -49,11 +49,13 @@ if __name__=='__main__':
     except:
         raise Exception("Missing csv path.")
 
-
+    print "Reading dataset"
     df = IOProcessor.read_dataset(csv_filepath)
 
+    print "Writing column reports"
     header_reports = Analyzer.create_header_reports(df, expected_types)
     IOProcessor.write_header_reports(REPORT_FILEPATH, header_reports, is_train)
 
+    print "Writing general report"
     general_report = Analyzer.create_general_report(df)
     IOProcessor.write_report(REPORT_FILEPATH, 'general_report', general_report, is_train)
