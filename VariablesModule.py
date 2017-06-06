@@ -13,7 +13,7 @@ ROWS_REMOVABLES_ALL = ['n_accounts', 'n_issues', 'n_bankruptcies', 'ok_since',
 
 ROWS_REMOVABLES_ANY = ['state', 'zip', 'last_payment', 'end_last_loan']
 
-HEADERS_REMOVALBLE = ['ids', 'channel', 'sign', 'ok_since', 'job_name']
+HEADERS_REMOVALBLE = ['channel', 'sign', 'ok_since', 'job_name']
 
 HEADERS_MEAN = ['risk_rate', 'income', 'score_3', 'score_4', 'score_5',
                 'score_6']
@@ -26,6 +26,11 @@ HEADERS_MODE = ['default', 'n_bankruptcies', 'n_defaulted_loans',
 
 HEADERS_PREVIOUS = ['facebook_profile', 'gender', 'reason', 'state', 'zip']
     #last paymnt, end last loan
+
+HEADERS_BOOLEAN = ['facebook_profile', 'default']
+
+HEADERS_CATEGORICAL = ['gender', 'real_state', 'score_1', 'score_2', 'reason', 
+                       'state','zip']
 
 MODEL_DICT = {"lg": LogisticRegression(n_jobs = -1, random_state = 14128), 
               "sgd": SGDClassifier(n_jobs = -1, random_state = 14128),
