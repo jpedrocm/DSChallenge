@@ -31,12 +31,17 @@ class Experimentation:
 
         return folds_scores, mean_score, std_score
 
+    def get_model(self):
+        """Returns the ML model."""
+
+        return self.model
+
     def predict_labels(self, X):
         """Returns the predicted labels for each row in X."""
 
         return self.model.predict(X)
 
-    def predict_probabilities(self, X):
+    def predict_probs(self, X):
         """Returns the predicted probabilites for each row in X."""
 
         return self.model.predict_proba(X)

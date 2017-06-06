@@ -1,6 +1,8 @@
 ##############################################################################
 import pandas as pd
 
+from sklearn.externals import joblib
+
 
 class IOProcessor:
     """Utils class to process IO in all other scripts."""
@@ -41,12 +43,24 @@ class IOProcessor:
 
         return "\n%s%s%s\n" % (header, ': ', str(content))
 
+    @staticmethod
+    def load_model(filepath):
+        """Loads and returns the ML model from the file in filepath."""
+
+        return joblib.load(filepath)
+
     @classmethod
     def read_dataset(cls, filepath):
         """Returns a dataframe read from the CSV in the given filepath."""
 
         df = pd.read_csv(filepath, infer_datetime_format=True)
         return df
+
+    @staticmethod
+    def store_model(model, filepath):
+        """Stores the ML model in the given filepath."""
+
+        joblib.dump(model, filepath)
 
     @classmethod
     def write_report(cls, filepath, filename, report, is_train):
@@ -67,9 +81,9 @@ class IOProcessor:
                                               report_str, is_train)
  
     @classmethod
-    def write_to_csv(cls, filepath, dataframe, header_names):
-        """Writes the given dataframe to a CSV located in filepath."""
-
+    def write_to_csv(cls, filepath, dataframe, probs):
+        """Writes the given probabilities to a CSV located in filepath."""
+        
         dataframe.to_csv(filepath, columns=header_names, index=False)
 
     @staticmethod

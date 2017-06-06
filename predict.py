@@ -13,24 +13,24 @@ from VariableModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
 
 
 if __name__=='__main__':
-    """This script evaluates and generates ML model trained on the 
-    training set.
+    """This script generates predictions probabilities based on the given 
+    trained model.
     """
 
     try:
-        train_filepath = sys.argv[1]        
+        test_filepath = sys.argv[1]        
         model_filepath = sys.argv[2]
-        model_initials = sys.argv[3]
+        predictions_filepath = sys.argv[3]
     except:
         raise Exception("Missing one or multiple sys args.")
-
+    
     try:
-        model = MODEL_DICT[model_initials]
+        model = IOProcessor.load_model(model_filepath)
     except:
-        raise Exception("Model not found in MODEL DICT.")
+        raise Exception("Model not found in the given path.")
 
     
-    df = IOProcessor.read_dataset(train_filepath)
+    df = IOProcessor.read_dataset(test_filepath)
 
     Handler.remove_rows(df, ROWS_REMOVABLES_ALL, 'all')
     Handler.remove_rows(df, ROWS_REMOVABLES_ANY, 'any')
@@ -41,14 +41,7 @@ if __name__=='__main__':
     Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
     Handler.impute_missing_values(df, HEADERS_PREVIOUS)
 
-    
-
     exp = Experimentation(model, N_FOLDS)
-    f1_folds, avg, dev = exp.experiment_model(X, y)
+    probs = exp.predict_probs(X)
 
-    print "F1 scores: " + str(f1_folds)
-    print "Averaged F1: " + str(avg)
-    print "Deviation F1: " + str(dev)
-
-    trained_model = exp.get_model()
-    IOProcessor.store_model(trained_model, model_filepath)
+    IOProcessor.write_to_csv(predictions_filepath, df, probs)
