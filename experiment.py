@@ -71,7 +71,10 @@ if __name__=='__main__':
     print "Storing model"
     trained_model = exp.get_model()
     IOProcessor.store_model(trained_model, model_filepath)
-    IOProcessor.store_encoded_headers(np.array(encoded_df.columns), 
+
+    encoded_headers = np.array(encoded_df.columns)
+    encoded_headers = np.insert(encoded_headers, 0, 'ids', 0)
+    IOProcessor.store_encoded_headers(encoded_headers, 
                                       HEADERS_TRAIN_FILENAME)
 
     print "Done"

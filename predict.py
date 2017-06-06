@@ -47,22 +47,14 @@ if __name__=='__main__':
     print "Encoding features and labels"
     Encoder.encode_booleans(df, HEADERS_BOOLEAN)
     encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
-    print encoded_df.shape
     Encoder.adapt_test_features(encoded_df, headers_train)
-    print encoded_df.shape
     X, _ , ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
                                                          None, 'ids')
     print "(rows, features) = " + str(X.shape)
 
-    raise NameError
-
     print "Predicting probabilities"
     exp = Experimentation(model, N_FOLDS)
     probs = exp.predict_probs(X)
-
-    print probs
-
-    raise NameError
 
     print "Writing results"
     IOProcessor.write_to_csv(predictions_filepath, ids_frame, probs)
