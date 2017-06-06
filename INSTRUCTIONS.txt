@@ -20,32 +20,33 @@ virtualenv
 
 
 # How to run
-1) To create report analysis from a CSV, run:
+1) To create an analysis report from a CSV, run:
 
-python analyze.py <set_csv_filepath>
+python analyze.py  datasets/<set_csv_name>
 
-Reports are saved to data/reports/
+Reports are saved to reports/
 
 
-2) To experiment some model, run:
+2) To experiment with some model, run:
 
-python experiment.py <train_set_csv_filepath> <model_initials>
+python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  <model_initials>
 
 Possible <model_initials> are:
 "lg" for Logistic Regression
-"sgd" for Stochasting Gradient Descent Regression
+"sgd" for Stochastic Gradient Descent Regression
+"best" for the model I evaluated as the best one
 
-Models are saved to data/models/
+Models are saved to models/
 
 
-3) To make predictions on a CSV, run:
+3) To make predictions on a set, run:
 
-python predict.py <test_set_csv_filepath> <model_filepath> <prediction_csv_filename>
+python predict.py  datasets/<test_set_csv_name>  models/<model_filename>  predictions/<prediction_csv_name>
 
-Predictions are saved to data/csvs/
+Predictions are saved to predictions/
 
 
 4) To generate the best predictions.csv, run:
 
-python experiment.py <train_set_csv_filepath> "lg"
-python predict.py <test_set_csv_filepath> data/ predictions.csv
+python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  "best"
+python predict.py  datasets/<test_set_csv_name>  predictions/predictions.csv
