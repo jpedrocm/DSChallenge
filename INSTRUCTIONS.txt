@@ -38,7 +38,6 @@ python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  <m
 *Possible <model_initials> are:
 lg for a simple Logistic Regression
 sgd for a simple Stochastic Gradient Descent Classifier
-best for the model I evaluated as the best one
 
 *Other evaluated models can be found as keys in a dict called MODEL_DICT, found in the VariablesModule.py file
 *Models are saved to models/
@@ -53,5 +52,5 @@ python predict.py  datasets/<test_set_csv_name>  models/<model_filename>  predic
 
 4) To generate the best predictions.csv, run:
 
-python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  best
+python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  lg
 python predict.py  datasets/<test_set_csv_name>  models/<model_filename>  predictions/predictions.csv
