@@ -7,7 +7,7 @@ from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
 from VariablesModule import N_FOLDS, MODEL_DICT
-from VariablesModule import ROWS_REMOVABLES_ALL, ROWS_REMOVABLES_ANY
+from VariablesModule import ROWS_REMOVABLE_ALL, ROWS_REMOVABLE_ANY
 from VariablesModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
 from VariablesModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
 from VariablesModule import HEADERS_BOOLEAN, HEADERS_CATEGORICAL
@@ -33,11 +33,9 @@ if __name__=='__main__':
     print "Reading training set"
     df = IOProcessor.read_dataset(train_filepath)
 
-    print "Removing rows with too many missing values"
-    Handler.remove_rows(df, ROWS_REMOVABLES_ALL, 'all')
-    Handler.remove_rows(df, ROWS_REMOVABLES_ANY, 'any')
-
-    print "Removing unninformative and very sparse columns"
+    print "Removing unninformative rows and columns"
+    Handler.remove_rows(df, ROWS_REMOVABLE_ALL, 'all')
+    Handler.remove_rows(df, ROWS_REMOVABLE_ANY, 'any')
     Handler.remove_columns(df, HEADERS_REMOVALBLE)
 
     print "Imputing missing data"
@@ -49,20 +47,18 @@ if __name__=='__main__':
     print "Encoding features and labels"
     Encoder.encode_booleans(df, HEADERS_BOOLEAN)
     encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
-    X, y, ids_frame = Encoder.divide_dataframe(encoded_df, 'default', 'ids')
-
-    print y
-    raise NameError
-
+    X, y, ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
+                                                         'default', 'ids')
     print "Training model"
     exp = Experimentation(model, N_FOLDS)
     f1_folds, avg, dev = exp.experiment_model(X, y)
+
     print "\n################################"
     print "F1 scores: " + str(f1_folds)
-    print "Averaged F1: " + str(avg)
-    print "Deviation F1: " + str(dev)
+    print "F1 mean: " + str(avg)
+    print "F1 deviation: " + str(dev)
     print "################################\n"
-
+    raise NameError
     print "Storing model"
     trained_model = exp.get_model()
     IOProcessor.store_model(trained_model, model_filepath)
