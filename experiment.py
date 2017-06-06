@@ -6,10 +6,18 @@ from HandlerModule import Handler
 from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
-REMOVABLE_HEADERS = ['']
+
+HEADERS_REMOVALBLE = ['ids']
+HEADERS_MEAN = []
+HEADERS_MEDIAN = []
+HEADERS_MODE = []
+HEADERS_PREVIOUS = ['zip']
+
 
 if __name__=='__main__':
-    """This script generates a ML model trained on the training set."""
+    """This script evaluates and generates ML model trained on the 
+    training set.
+    """
 
     try:
         train_filepath = sys.argv[1]        
@@ -21,4 +29,9 @@ if __name__=='__main__':
     
     df = IOProcessor.read_dataset(train_filepath)
 
-    Handle.remove_columns(df, )
+    Handler.remove_columns(df, HEADERS_REMOVALBLE)
+    Handler.impute_missing_values(df, HEADERS_MEAN, 'mean')
+    Handler.impute_missing_values(df, HEADERS_MEDIAN, 'median')
+    Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
+    Handler.impute_missing_values(df, HEADERS_PREVIOUS)
+
