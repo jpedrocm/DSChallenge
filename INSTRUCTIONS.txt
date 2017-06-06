@@ -10,9 +10,10 @@ numpy
 pandas
 scikit-learn
 
+
 # Installation
-1) Install Python 2.7: 
-2) Pip should come along with Python, but if it doesn't, install pip: 
+1) Install Python 2.7 
+2) If pip came with Python, upgrade it, otherwise, install it
 3) Install virtualenv: pip install virtualenv
 4) Move to the parent folder of the project folder containing all .py files
 5) Create a new virtualenv: virtualenv -p python2 <env_directory_name>
@@ -34,7 +35,7 @@ python analyze.py  datasets/<set_csv_name>
 
 python experiment.py  datasets/<train_set_csv_name>  models/<model_filename>  <model_initials>
 
-Possible <model_initials> are:
+*Possible <model_initials> are:
 lg for a simple Logistic Regression
 sgd for a simple Stochastic Gradient Descent Classifier
 best for the model I evaluated as the best one
