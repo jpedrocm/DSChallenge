@@ -20,7 +20,7 @@ class Experimentation:
         """Makes cross_validation and evaluate each fold score."""
 
         scores = cross_val_score(self.model, X, y = y, cv = self.n_folds,
-                               scoring ='f1' ,verbose = 2, n_jobs = -1)
+                               scoring ='f1_micro' ,verbose = 2, n_jobs = -1)
 
         return scores
 
@@ -53,4 +53,4 @@ class Experimentation:
         of labels y.
         """
 
-        self.model.fit(X, labels)
+        self.model.fit(X, y)

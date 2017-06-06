@@ -6,10 +6,10 @@ from HandlerModule import Handler
 from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
-from VariableModule import N_FOLDS, MODEL_DICT
-from VariableModule import ROWS_REMOVABLES_ALL, ROWS_REMOVABLES_ANY
-from VariableModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
-from VariableModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
+from VariablesModule import N_FOLDS, MODEL_DICT
+from VariablesModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
+from VariablesModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
+from VariablesModule import HEADERS_BOOLEAN, HEADERS_CATEGORICAL
 
 
 if __name__=='__main__':
@@ -30,18 +30,32 @@ if __name__=='__main__':
         raise Exception("Model not found in the given path.")
 
     
+    print "Reading test set"
     df = IOProcessor.read_dataset(test_filepath)
 
-    Handler.remove_rows(df, ROWS_REMOVABLES_ALL, 'all')
-    Handler.remove_rows(df, ROWS_REMOVABLES_ANY, 'any')
+    print "Removing unninformative columns"
     Handler.remove_columns(df, HEADERS_REMOVALBLE)
 
+    print "Imputing missing data"
     Handler.impute_missing_values(df, HEADERS_MEAN, 'mean')
     Handler.impute_missing_values(df, HEADERS_MEDIAN, 'median')
     Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
     Handler.impute_missing_values(df, HEADERS_PREVIOUS)
 
+    print "Encoding features and labels"
+    Encoder.encode_booleans(df, HEADERS_BOOLEAN)
+    encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
+    Encoder.add_missing_features(encoded_df, HEADERS_TRAINING)
+    Encoder.reorder_headers(encoded_df, HEADERS_TRAINING)
+    X, _ , ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
+                                                         None, 'ids')
+    print "(rows, features) = " + str(X.shape)
+
+    print "Predicting probabilities"
     exp = Experimentation(model, N_FOLDS)
     probs = exp.predict_probs(X)
 
-    IOProcessor.write_to_csv(predictions_filepath, df, probs)
+    print "Writing results"
+    IOProcessor.write_to_csv(predictions_filepath, ids_frame, probs)
+
+    print "Done"

@@ -11,11 +11,20 @@ N_FOLDS = 5
 
 # DICT OF (MODEL_INITIAL: MODEL OBJECT)
 MODEL_DICT = {"lg": LogisticRegression(n_jobs = -1, random_state = 14128),
-              "lg_c": LogisticRegression(class_weight='balanced', n_jobs = -1,
-                                         random_state = 14128),
+              "lg_c": LogisticRegression(class_weight={True:0.2, False:0.8},
+                                         n_jobs = -1, random_state = 14128),
+              "lg_pen": LogisticRegression(class_weight={True:0.2, False:0.8},
+                                         n_jobs = -1, random_state = 14128,
+                                         penalty='l1'),
+              "lg_sag": LogisticRegression(class_weight={True:0.2, False:0.8},
+                                         n_jobs = -1, random_state = 14128,
+                                         solver='sag'),
+              "lg_int": LogisticRegression(class_weight={True:0.2, False:0.8},
+                                         n_jobs = -1, random_state = 14128,
+                                         intercept_scaling=2.5, penalty='l1'),
               "sgd": SGDClassifier(n_jobs = -1, random_state = 14128),
-              "sgd_log": SGDClassifier(loss='log', class_weight='balanced',
-                                       n_jobs = -1, random_state = 14128),
+              "sgd_log": SGDClassifier(loss='log',n_jobs = -1, 
+                                       random_state = 14128),
               "rf": RandomForestClassifier(n_jobs = -1, random_state = 14128),
               "rf_50": RandomForestClassifier(n_estimators = 50, n_jobs = -1,
                                               random_state = 14128)}
@@ -39,7 +48,7 @@ HEADERS_MEAN = ['risk_rate', 'income', 'score_3', 'score_4', 'score_5',
 HEADERS_MEDIAN = ['credit_limit', 'amount_borrowed']
 
 # COLUMNS TO IMPUTE MISSING VALUES WITH MODE
-HEADERS_MODE = ['default', 'n_bankruptcies', 'n_defaulted_loans', 
+HEADERS_MODE = ['n_bankruptcies', 'n_defaulted_loans', 
                 'n_accounts', 'n_issues', 'real_state', 'borrowed_in_months',
                 'score_1', 'score_2']
 
@@ -52,4 +61,4 @@ HEADERS_BOOLEAN = ['facebook_profile']
 
 # COLUMNS TO ONE-HOT ENCODE
 HEADERS_CATEGORICAL = ['gender', 'real_state', 'score_1', 'score_2', 
-                       'state','zip']
+                       'state', 'zip']

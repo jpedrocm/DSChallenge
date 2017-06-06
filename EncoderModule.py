@@ -37,15 +37,16 @@ class Encoder:
         The second is the column frame of labels, the third is the column 
         frame of IDs and the first are all the remaining columns.
         """
+        
+        ids = np.array(dataframe[id_header])
 
         if label_header is None:
             y = None
+            dataframe.drop([id_header], axis=1, inplace=True)
         else:
             y = np.array(dataframe[label_header]).astype(bool)
-
-        ids = np.array(dataframe[id_header])
-
-        dataframe.drop([id_header, label_header], axis=1, inplace=True)          
+            dataframe.drop([id_header, label_header], axis=1, inplace=True)
+          
         X = np.array(dataframe).astype(np.float64)
 
         del dataframe

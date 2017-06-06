@@ -41,6 +41,7 @@ if __name__=='__main__':
     print "Imputing missing data"
     Handler.impute_missing_values(df, HEADERS_MEAN, 'mean')
     Handler.impute_missing_values(df, HEADERS_MEDIAN, 'median')
+    HEADERS_MODE.append('default')
     Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
     Handler.impute_missing_values(df, HEADERS_PREVIOUS)
 
@@ -49,8 +50,9 @@ if __name__=='__main__':
     encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
     X, y, ids_frame = Encoder.transform_and_del_dataframe(encoded_df, 
                                                          'default', 'ids')
+    print "(rows, features) = " + str(X.shape)
 
-    print "Training model"
+    print "Evaluating model"
     exp = Experimentation(model, N_FOLDS)
     f1_folds, avg, dev = exp.experiment_model(X, y)
 
@@ -59,7 +61,12 @@ if __name__=='__main__':
     print "F1 mean: " + str(avg)
     print "F1 deviation: " + str(dev)
     print "################################\n"
-    raise NameError
+
+    print "Training model"
+    exp.train_model(X, y)
+    print exp.predict_probs(X)
     print "Storing model"
     trained_model = exp.get_model()
     IOProcessor.store_model(trained_model, model_filepath)
+
+    print "Done"

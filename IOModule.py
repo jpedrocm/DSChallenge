@@ -81,10 +81,13 @@ class IOProcessor:
                                               report_str, is_train)
  
     @classmethod
-    def write_to_csv(cls, filepath, dataframe, probs):
+    def write_to_csv(cls, filepath, ids_frame, probs):
         """Writes the given probabilities to a CSV located in filepath."""
-        
-        dataframe.to_csv(filepath, columns=header_names, index=False)
+
+        csv_dataframe = ids_frame.to_frame()
+        csv_dataframe['predictions'] = probs
+        csv_dataframe.to_csv(filepath, columns=['ids', 'predictions'],
+                             index=False)
 
     @staticmethod
     def _write_to_file(filepath, content):

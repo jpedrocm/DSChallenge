@@ -57,7 +57,7 @@ class Handler:
 
         for header in headers:
             column = dataframe[header]
-            _impute_function(column)    
+            _impute_function(column)  
     
     @staticmethod
     def remove_columns(dataframe, headers):
