@@ -6,10 +6,11 @@ from HandlerModule import Handler
 from EncoderModule import Encoder
 from ExperimentationModule import Experimentation
 
-from VariableModule import N_FOLDS, MODEL_DICT
-from VariableModule import ROWS_REMOVABLES_ALL, ROWS_REMOVABLES_ANY
-from VariableModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
-from VariableModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
+from VariablesModule import N_FOLDS, MODEL_DICT
+from VariablesModule import ROWS_REMOVABLES_ALL, ROWS_REMOVABLES_ANY
+from VariablesModule import HEADERS_REMOVALBLE, HEADERS_MEAN, HEADERS_MODE
+from VariablesModule import HEADERS_MEDIAN, HEADERS_PREVIOUS
+from VariablesModule import HEADERS_BOOLEAN, HEADERS_CATEGORICAL
 
 
 if __name__=='__main__':
@@ -41,7 +42,11 @@ if __name__=='__main__':
     Handler.impute_missing_values(df, HEADERS_MODE, 'mode')
     Handler.impute_missing_values(df, HEADERS_PREVIOUS)
 
-    
+    Encoder.encode_booleans(df, HEADERS_BOOLEAN)
+    encoded_df = Encoder.encode_categoricals(df, HEADERS_CATEGORICAL)
+    print encoded_df.columns[:50]
+    raise NameError
+    X, y, ids_frame = Encoder.divide_dataframe(encoded_df, 'default', 'ids')
 
     exp = Experimentation(model, N_FOLDS)
     f1_folds, avg, dev = exp.experiment_model(X, y)
