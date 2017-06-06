@@ -11,15 +11,15 @@ AnalyzerModule.py - contains the Analyzer class, which creates reports about a d
 HandlerModule.py - contains the Handler class, which handles missing data and cleans likely unninformative values
 EncoderModule.py - contains the Encoder class, which appropriately encodes values for a ML model
 ExperimentationModule.py - contains the Experimentation class, which does cross-validation training on the dataset with a ML model
-VariablesModule.py - contains several variables used in both experiment.py and predict.py
+VariablesModule.py - contains all variables used in both experiment.py and predict.py
 
 Libraries:
-pandas - to help read and write to CSV, impute or clean values, and encode them
-numpy - to recognize data types read by pandas and do statistical calculations
-scikit-learn - to create ML models and do cross-validation evaluation
+pandas - to deal with CSV's, missing data and encoding
+numpy - to recognize data types read by pandas and statistical calculations
+scikit-learn - to create ML models and evaluate them
 
-First, I ran analyze.py on the training and testing sets to generate reports to better understand the data. The reports showed the distribution of values per column in the datasets and the original data type of those values. This way, I could decide which columns were informative, which needed imputing for missing values, and how this imputation was going to be made. It also allowed me to check which columns needed encoding.
+First, I ran analyze.py on the training and testing sets to generate reports to better understand the data. The reports showed the distribution of values per column in the datasets and the original data type of those values. This way, I could decide which columns were informative, which needed imputing for missing values, and how this imputation was going to be made. It also allowed me to check which values needed encoding.
 
-Then, using a 5-fold cross-validation, I ran experiments with Logistic Regression and Stochastic Gradient Descent Regression (also tuning their hyperparameters) on the training set to check which model had the best results based on the F-Measure score per fold, the average of them and the standard deviation.
+Then, using a 5-fold cross-validation, I ran experiments with 3 ML models (also tuning their hyperparameters) [SEE INSTRUCTIONS] on the training set to check which model had the best results based on the F-Measure score per fold, the average and standard deviation of them.
 
-Finally, the probabilities were generated using the model with a good balance between having a high average F-Measure while maintaining a small deviation.
+Finally, the probabilities were generated using the model with a good balance between having a high averaged F-Measure and a small deviation.
