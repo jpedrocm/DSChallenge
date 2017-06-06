@@ -1,4 +1,4 @@
-I implemented a Python project with 3 scripts to generate the final results. These scripts use 5 modules I built with the help of 3 libraries:
+I implemented a Python project with 3 scripts to generate the final results. These scripts use 6 modules I built with the help of 3 libraries:
 
 Scripts:
 analyze.py - loads a dataset and creates analysis reports in files
@@ -11,9 +11,10 @@ AnalyzerModule.py - contains the Analyzer class, which creates reports about a d
 HandlerModule.py - contains the Handler class, which handles missing data and cleans likely unninformative values
 EncoderModule.py - contains the Encoder class, which appropriately encodes values for a ML model
 ExperimentationModule.py - contains the Experimentation class, which does cross-validation training on the dataset with a ML model
+VariablesModule.py - contains several variables used in both experiment.py and predict.py
 
 Libraries:
-pandas - to help read and write to CSV, and impute or clean values
+pandas - to help read and write to CSV, impute or clean values, and encode them
 numpy - to recognize data types read by pandas and do statistical calculations
 scikit-learn - to create ML models and do cross-validation evaluation
 
