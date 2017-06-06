@@ -58,7 +58,7 @@ class Encoder:
         frame of IDs and the first are all the remaining columns.
         """
 
-        ids = np.array(dataframe[id_header])
+        ids_frame = dataframe[id_header].copy()
 
         if label_header is None:
             y = None
@@ -71,4 +71,4 @@ class Encoder:
 
         del dataframe
 
-        return X, y, ids
+        return X, y, ids_frame

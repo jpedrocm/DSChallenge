@@ -55,8 +55,9 @@ if __name__=='__main__':
     print "Predicting probabilities"
     exp = Experimentation(model, N_FOLDS)
     probs = exp.predict_probs(X)
+    probs_default = [prob_pair[1] for prob_pair in probs]
 
     print "Writing results"
-    IOProcessor.write_to_csv(predictions_filepath, ids_frame, probs)
+    IOProcessor.write_to_csv(predictions_filepath, ids_frame, probs_default)
 
     print "Done"
